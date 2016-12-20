@@ -1,61 +1,25 @@
 <template>
   <div>
-    <el-row :gutter="20">
-      <el-col :span="24">
-        <el-slider v-model="codeI" :max="parseInt(trace.length)" show-stops show-input></el-slider>
-      </el-col>
-    </el-row>
+    <Slider></Slider>
     <el-row :gutter="20">
       <el-col :span="12">
-        <pre class="hljs">
-          <code>
-            <div v-for="(line, i) in func" v-bind:class="{ active: currentStep[0].line == i + 1, last: currentStep[0].lastLine == i + 1 }" class="line">
-              <span class="line-number">{{i + 1}}</span><div class="code-line" v-html="line"></div>
-            </div>
-          </code>
-        </pre>
+        <CodeBlock :code="func" :currentLine="currentStep[0].line" :lastLine="currentStep[0].lastLine"></CodeBlock>
       </el-col>
       <el-col :span="12">
         <h4>Current Step</h4>
-        <el-table :data="currentStep">
-          <el-table-column prop="event" label="Event"></el-table-column>
-          <el-table-column prop="line" label="Line"></el-table-column>
-        </el-table>
+        <CurrentStepTable :step="currentStep"></CurrentStepTable>
         <el-row :gutter="20">
           <el-col :span="12">
             <h4>Globals</h4>
-            <el-table :data="globals">
-              <el-table-column prop="varName" label="Name"></el-table-column>
-              <el-table-column prop="value" label="Value"></el-table-column>
-            </el-table>
+            <GlobalsTable :globals="globals"></GlobalsTable>
           </el-col>
           <el-col :span="12">
             <h4>Output</h4>
-            <el-table :data="stdout">
-              <el-table-column prop="stdout" label="stdout" span></el-table-column>
-            </el-table>
+            <OutputTable :output="stdout"></OutputTable>
           </el-col>
         </el-row>
         <h4>Frames</h4>
-        <el-table :data="currentStack" :row-class-name="isNewestFrame">
-          <el-table-column prop="function" label="Function"></el-table-column>
-          <el-table-column prop="frame" label="Frame"></el-table-column>
-          <el-table-column prop="localVals" label="Local Values" inline-template>
-            <div>
-              <div v-for="local in row.localVals">
-                <span v-if="local.variable === '__return__'">
-                  <i class="el-icon-d-arrow-right"></i> return:
-                </span>
-                <span v-if="local.variable !== '__return__'">
-                  {{local.variable}}:
-                </span>
-                <span :class="local.val === 'undefined' ? 'grey' : ''">
-                  {{local.val}}
-                </span>
-              </div>
-            </div>
-          </el-table-column>
-        </el-table>
+        <FramesTable :trace="currentTrace" :stack="currentStack"></FramesTable>
       </el-col>
     </el-row>
   </div>
@@ -64,38 +28,34 @@
 <script>
 /*
 Todo:
-split into smaller components
-Clean up styles
-Interactive code. Enable code editing and have a "run" button
-Option: Initialize with markdown template
-Option: Include different tables based on props
+[X] Split into smaller components
+[ ] Lower level components should all be "dumb"
+[ ] Clean up styles
+[ ] Refactor
+[ ] Interactive code. Enable code editing and have a "run" button
+[ ] Option: Initialize with markdown template
+[ ] Option: Include different tables based on props
 */
 import { mapState } from 'vuex';
+import Slider from './../components/Slider';
+import CodeBlock from './../components/CodeBlock';
+import CurrentStepTable from './../components/CurrentStepTable';
+import GlobalsTable from './../components/GlobalsTable';
+import OutputTable from './../components/OutputTable';
+import FramesTable from './../components/FramesTable';
 import markdown from '../modules/markdown';
 
 export default {
+  components: {
+    CodeBlock,
+    CurrentStepTable,
+    FramesTable,
+    GlobalsTable,
+    OutputTable,
+    Slider,
+  },
   created: function created() {
     this.$store.dispatch('getCode');
-  },
-  data() {
-    return {
-      codeI: this.$store.state.codeI
-    };
-  },
-  methods: {
-    isNewestFrame(_, index) {
-      if (this.currentTrace) {
-        if (index + 1 === this.currentTrace.stack_to_render.length) {
-          return 'new-row';
-        }
-      }
-      return '';
-    }
-  },
-  watch: {
-    codeI(i) {
-      this.$store.dispatch('updateCodeI', i);
-    }
   },
   computed: mapState({
     trace: s => s.code ? s.code.trace : [],
