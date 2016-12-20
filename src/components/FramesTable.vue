@@ -24,14 +24,24 @@
 export default {
   props: ['stack', 'trace'],
   methods: {
-    isNewestFrame(_, index) {
-      if (this.trace) {
-        if (index + 1 === this.trace.stack_to_render.length) {
-          return 'new-row';
-        }
+    isNewestFrame(_, i) {
+      if (this.trace && i + 1 === this.trace.stack_to_render.length) {
+        return 'new-row';
       }
       return '';
     }
   }
 };
 </script>
+
+<style src="../styles/code-theme.css" scoped></style>
+<style lang="sass" scoped>
+  .grey
+  	color: grey
+</style>
+
+<style lang="sass">
+  /* eleme.io customizations */
+  .el-table tr.new-row
+  	background-color: #EFF2F7
+</style>

@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="24">
-        <el-slider v-model="codeI" :max="parseInt(trace.length)" show-stops show-input></el-slider>
+        <el-slider v-if="trace.length" v-model="codeI" :max="parseInt(trace.length)" show-stops show-input></el-slider>
       </el-col>
     </el-row>
   </div>
@@ -28,8 +28,9 @@ export default {
 };
 </script>
 
-<style>
-  .el-progress {
-    margin-top: 15px;
-  }
+<style lang="sass">
+  .el-tooltip__popper,
+  .el-tooltip__popper span
+    user-select: none
+    font-family: 'Roboto Mono'
 </style>

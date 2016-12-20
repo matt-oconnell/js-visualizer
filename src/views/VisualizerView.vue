@@ -29,8 +29,8 @@
 /*
 Todo:
 [X] Split into smaller components
-[ ] Lower level components should all be "dumb"
-[ ] Clean up styles
+[X] Lower level components should all be "dumb"
+[X] Clean up styles
 [ ] Refactor
 [ ] Interactive code. Enable code editing and have a "run" button
 [ ] Option: Initialize with markdown template
@@ -121,50 +121,10 @@ ${funcStr}`;
 };
 </script>
 
-<style media="screen">
-  .grey {
-    color: grey;
-  }
-  code, pre {
-    display: block;
-    margin: 0;
-  }
-  pre {
-    white-space: normal;
-  }
-  code {
-    white-space: pre;
-  }
-  .code-line {
-    display: inline-block;
-  }
-  .line {
-    line-height: .8;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 5px 10px;
-    transition: background-color .5s
-  }
-  .line.active {
-    background-color: rgba(0, 128, 0, 0.40);
-  }
-  .line.last {
-    background-color: rgba(0, 128, 0, 0.10);
-  }
-  .line-number {
-    display: inline-block;
-    width: 20px;
-    white-space: normal;
-    margin-right: 20px;
-    margin-left: 3px;
-  }
-  .buttons {
-    margin-top: 25px;
-    text-align: center;
-  }
-  /* eleme.io customizations */
-  .el-table tr.new-row {
-    background-color: #EFF2F7;
-  }
+<style src="../styles/app.css"></style>
+
+<style lang="sass" scoped>
+  // Prevent slider bug from selecting everything
+  *
+    user-select: none
 </style>

@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0 20px;
+}
+
+#app {
+  font-family: 'Roboto Mono';
+  margin: 0 auto;
+}

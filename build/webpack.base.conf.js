@@ -53,6 +53,10 @@ module.exports = {
         loader: 'vue'
       },
       {
+        test: /\.styl$/,
+        loader: 'stylus-loader'
+      },
+      {
         test: /\.js$/,
         loader: 'babel',
         include: projectRoot,
