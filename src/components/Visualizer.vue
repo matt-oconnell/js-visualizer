@@ -1,25 +1,25 @@
 <template>
   <div>
-    <Slider></Slider>
+    <Slider v-if="!excluded('slider')"></Slider>
     <el-row :gutter="20">
       <el-col :span="12">
-        <CodeBlock :code="code" :currentLine="currentTrace.line" :lastLine="lastTrace ? lastTrace.line : -1"></CodeBlock>
+        <CodeBlock v-if="!excluded('code-block')" :code="code" :currentLine="currentTrace.line" :lastLine="lastTrace ? lastTrace.line : -1"></CodeBlock>
       </el-col>
       <el-col :span="12">
         <h4>Current Step</h4>
-        <CurrentStepTable :step="[currentTrace]"></CurrentStepTable>
+        <CurrentStepTable v-if="!excluded('current-step')" :step="[currentTrace]"></CurrentStepTable>
         <el-row :gutter="20">
           <el-col :span="12">
             <h4>Globals</h4>
-            <GlobalsTable :trace="currentTrace"></GlobalsTable>
+            <GlobalsTable v-if="!excluded('globals')" :trace="currentTrace"></GlobalsTable>
           </el-col>
           <el-col :span="12">
             <h4>Output</h4>
-            <OutputTable :trace="currentTrace"></OutputTable>
+            <OutputTable v-if="!excluded('output')" :trace="currentTrace"></OutputTable>
           </el-col>
         </el-row>
         <h4>Frames</h4>
-        <FramesTable :trace="currentTrace"></FramesTable>
+        <FramesTable v-if="!excluded('frames')" :trace="currentTrace"></FramesTable>
       </el-col>
     </el-row>
   </div>
@@ -30,7 +30,6 @@
 Todo:
 [ ] Interactive code. Enable code editing and have a "run" button
 [ ] Option: Initialize with markdown template
-[ ] Option: Include different tables based on props
 */
 import { mapState } from 'vuex';
 import Slider from './../components/Slider';
@@ -41,7 +40,7 @@ import OutputTable from './../components/OutputTable';
 import FramesTable from './../components/FramesTable';
 
 export default {
-  props: ['trace', 'code'],
+  props: ['trace', 'code', 'exclude'],
   components: {
     CodeBlock,
     CurrentStepTable,
@@ -49,6 +48,11 @@ export default {
     GlobalsTable,
     OutputTable,
     Slider,
+  },
+  methods: {
+    excluded(el) {
+      return this.exclude ? this.exclude.includes(el) : false;
+    }
   },
   computed: mapState({
     currentTrace(s) {
