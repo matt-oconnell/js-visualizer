@@ -2,17 +2,17 @@
   <el-table :data="stack" :row-class-name="isNewestFrame">
     <el-table-column prop="function" label="Function"></el-table-column>
     <el-table-column prop="frame" label="Frame"></el-table-column>
-    <el-table-column prop="localVals" label="Local Values" inline-template>
+    <el-table-column label="Local Variables" inline-template>
       <div>
-        <div v-for="local in row.localVals">
-          <span v-if="local.variable === '__return__'">
+        <div v-for="variable in row.localVariables">
+          <span v-if="variable.name === '__return__'">
             <i class="el-icon-d-arrow-right"></i> return:
           </span>
-          <span v-if="local.variable !== '__return__'">
-            {{local.variable}}:
+          <span v-if="variable.name !== '__return__'">
+            {{variable.name}}:
           </span>
-          <span :class="local.val === 'undefined' ? 'grey' : ''">
-            {{local.val}}
+          <span :class="variable.val === 'undefined' ? 'grey' : ''">
+            {{variable.val}}
           </span>
         </div>
       </div>
@@ -22,13 +22,30 @@
 
 <script>
 export default {
-  props: ['stack', 'trace'],
+  props: ['trace'],
   methods: {
     isNewestFrame(_, i) {
-      if (this.trace && i + 1 === this.trace.stack_to_render.length) {
+      if (i + 1 === this.trace.stack_to_render.length) {
         return 'new-row';
       }
       return '';
+    }
+  },
+  computed: {
+    stack() {
+      return this.trace.stack_to_render.map((frame) => {
+        const localVariables = [];
+        Object.keys(frame.encoded_locals).forEach((key) => {
+          const rawVal = frame.encoded_locals[key];
+          const val = Array.isArray(rawVal) ? rawVal[1] : rawVal;
+          localVariables.push({ name: key, val });
+        });
+        return {
+          frame: frame.frame_id,
+          function: frame.func_name,
+          localVariables
+        };
+      });
     }
   }
 };

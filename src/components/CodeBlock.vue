@@ -1,7 +1,7 @@
 <template>
   <pre class="hljs">
     <code>
-      <div v-for="(line, i) in code" v-bind:class="{ active: isCurrent(i), last: isLast(i) }" class="line">
+      <div v-for="(line, i) in renderedCode" v-bind:class="{ active: isCurrent(i), last: isLast(i) }" class="line">
         <span class="number">{{i + 1}}</span>
         <div class="code" v-html="line"></div>
       </div>
@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import markdown from '../utils/markdown';
+
 export default {
   props: ['code', 'currentLine', 'lastLine'],
   methods: {
@@ -18,6 +20,14 @@ export default {
     },
     isLast(i) {
       return this.lastLine === i + 1;
+    }
+  },
+  computed: {
+    renderedCode() {
+      return markdown(this.code)
+        .split('<code>')[1]
+        .split('</code>')[0]
+        .split('\n');
     }
   }
 };
