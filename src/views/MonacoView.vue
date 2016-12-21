@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 500px;">
+  <div>
     <Monaco
         height="600"
         width="50%"

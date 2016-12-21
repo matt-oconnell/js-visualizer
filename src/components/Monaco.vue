@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 500px">
+  <div :style="style">
     <button v-on:click="clickHandler">Change value</button>
   </div>
 </template>
@@ -32,20 +32,22 @@ export default {
       }
     }
   },
-  beforeMount() {
-    this.afterViewInit();
-  },
   destroyed() {
     this.destroyMonaco();
   },
   mounted() {
-    const { width, height } = this;
-    const fixedWidth = width.toString().indexOf('%') !== -1 ? width : `${width}px`;
-    const fixedHeight = height.toString().indexOf('%') !== -1 ? height : `${height}px`;
-    this.style = {
-      width: fixedWidth,
-      height: fixedHeight,
-    };
+    this.afterViewInit();
+  },
+  computed: {
+    style() {
+      const { width, height } = this;
+      const fixedWidth = width.toString().indexOf('%') !== -1 ? width : `${width}px`;
+      const fixedHeight = height.toString().indexOf('%') !== -1 ? height : `${height}px`;
+      return {
+        width: fixedWidth,
+        height: fixedHeight,
+      };
+    }
   },
   methods: {
     clickHandler() {
