@@ -3,7 +3,8 @@
     <Slider v-if="!excluded('slider')"></Slider>
     <el-row :gutter="20">
       <el-col :span="12">
-        <CodeBlock v-if="!excluded('code-block')" :code="code" :currentLine="currentTrace.line" :lastLine="lastTrace ? lastTrace.line : -1"></CodeBlock>
+        <!-- <CodeBlock v-if="!excluded('code-block')" :code="code" :currentLine="currentTrace.line" :lastLine="lastTrace ? lastTrace.line : -1"></CodeBlock> -->
+        <Monaco v-if="!excluded('code-block')" :code="code" :currentLine="currentTrace.line" :lastLine="lastTrace ? lastTrace.line : -1"></Monaco>
       </el-col>
       <el-col :span="12">
         <h4>Current Step</h4>
@@ -33,7 +34,7 @@ Todo:
 */
 import { mapState } from 'vuex';
 import Slider from './../components/Slider';
-import CodeBlock from './../components/CodeBlock';
+import Monaco from './../components/Monaco';
 import CurrentStepTable from './../components/CurrentStepTable';
 import GlobalsTable from './../components/GlobalsTable';
 import OutputTable from './../components/OutputTable';
@@ -42,7 +43,7 @@ import FramesTable from './../components/FramesTable';
 export default {
   props: ['trace', 'code', 'exclude'],
   components: {
-    CodeBlock,
+    Monaco,
     CurrentStepTable,
     FramesTable,
     GlobalsTable,

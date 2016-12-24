@@ -57,12 +57,12 @@ module.exports = {
   }
 };
 </script>
-
+<!--
 <style media="screen">
   .secondary-highlighted-line {
-    background: green;
+    background: rgba(0, 128, 0, 0.40);
   }
   .primary-highlighted-line {
-    background: blue;
+    background: rgba(0, 128, 0, 0.10);
   }
-</style>
+</style> -->
