@@ -25,7 +25,15 @@ const actions = {
       commit('UPDATE_CODE', {
         code: JSON.parse(res.body)
       });
-      commit('UPDATE_CODE_I', { i: 1 });
+      commit('UPDATE_CODE_I', { i: 0 });
+    });
+  },
+  getNewCode: ({ commit }, code) => {
+    Vue.http.get('/code', { params: { code } }).then((res) => {
+      commit('UPDATE_CODE', {
+        code: JSON.parse(res.body)
+      });
+      commit('UPDATE_CODE_I', { i: 0 });
     });
   },
   updateCodeI: ({ commit }, i) => {

@@ -10,4 +10,13 @@ app.get('/test', function(req, res) {
   .catch(e => res.send(e));
 });
 
+app.get('/code', function(req, res) {
+  const code = encodeURIComponent(req.query.code);
+  return request.get('http://localhost:3000/code?code=' + code).then((data) => {
+    res.send(data.text);
+  })
+  .catch(e => res.send(e));
+});
+
+
 module.exports = app;

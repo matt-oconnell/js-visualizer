@@ -4,7 +4,7 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <!-- <CodeBlock v-if="!excluded('code-block')" :code="code" :currentLine="currentTrace.line" :lastLine="lastTrace ? lastTrace.line : -1"></CodeBlock> -->
-        <Monaco v-if="!excluded('code-block')" :code="code" :currentLine="currentTrace.line" :lastLine="lastTrace ? lastTrace.line : -1"></Monaco>
+        <Monaco v-if="!excluded('code-block')" :code="code" @codeChanged="updateCode" :currentLine="currentTrace.line" :lastLine="lastTrace ? lastTrace.line : -1"></Monaco>
       </el-col>
       <el-col :span="12">
         <h4>Current Step</h4>
@@ -23,6 +23,7 @@
         <FramesTable v-if="!excluded('frames')" :trace="currentTrace"></FramesTable>
       </el-col>
     </el-row>
+    <button @click="getCode">Get Code!</button>
   </div>
 </template>
 
@@ -50,9 +51,20 @@ export default {
     OutputTable,
     Slider,
   },
+  data() {
+    return {
+      modelCode: this.code
+    };
+  },
   methods: {
     excluded(el) {
       return this.exclude ? this.exclude.includes(el) : false;
+    },
+    getCode(code) {
+      this.$store.dispatch('getNewCode', this.modelCode);
+    },
+    updateCode(code) {
+      this.modelCode = code;
     }
   },
   computed: mapState({

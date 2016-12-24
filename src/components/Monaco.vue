@@ -38,14 +38,10 @@ module.exports = {
   },
   methods: {
     onMounted(editor) {
-      console.log('after mount!', editor, editor.getValue(), editor.getModel());
       this.editor = editor;
     },
     onCodeChange(editor) {
-      console.log('code changed!', this.editor.getValue());
-    },
-    clickHandler() {
-      console.log('here is the code:', this.editor.getValue());
+      this.$emit('codeChanged', editor.getValue());
     }
   },
   created() {
