@@ -7,6 +7,13 @@
         <Monaco v-if="!excluded('code-block')" :code="modelCode" @codeChanged="updateCode" :currentLine="currentTrace.line" :lastLine="lastTrace ? lastTrace.line : -1"></Monaco>
       </el-col>
       <el-col :span="12">
+        <el-row>
+          <el-button type="primary" @click="getCode">Analyze Code!</el-button>
+        </el-row>
+        <el-row v-if="!excluded('current-step') && currentTrace.exception_msg">
+          <h4>Errors</h4>
+          <ExceptionTable :step="[currentTrace]"></ExceptionTable>
+        </el-row>
         <h4>Current Step</h4>
         <CurrentStepTable v-if="!excluded('current-step')" :step="[currentTrace]"></CurrentStepTable>
         <el-row :gutter="20">
@@ -23,20 +30,20 @@
         <FramesTable v-if="!excluded('frames')" :trace="currentTrace"></FramesTable>
       </el-col>
     </el-row>
-    <button @click="getCode">Get Code!</button>
   </div>
 </template>
 
 <script>
 /*
 Todo:
-[ ] Interactive code. Enable code editing and have a "run" button
 [ ] Option: Initialize with markdown template
+[ ] Handle Errors
 */
 import { mapState } from 'vuex';
 import Slider from './../components/Slider';
 import Monaco from './../components/Monaco';
 import CurrentStepTable from './../components/CurrentStepTable';
+import ExceptionTable from './../components/ExceptionTable';
 import GlobalsTable from './../components/GlobalsTable';
 import OutputTable from './../components/OutputTable';
 import FramesTable from './../components/FramesTable';
@@ -46,6 +53,7 @@ export default {
   components: {
     Monaco,
     CurrentStepTable,
+    ExceptionTable,
     FramesTable,
     GlobalsTable,
     OutputTable,
@@ -84,4 +92,7 @@ export default {
   // Prevent slider bug from selecting everything
   *
     user-select: none
+
+  .el-button
+    width: 100%
 </style>
