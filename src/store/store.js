@@ -6,6 +6,7 @@ Vue.use(Vuex);
 Vue.use(VueResource);
 
 const state = {
+  // todo: sync with monaco model :|
   code: null,
   codeI: 0
 };
@@ -20,6 +21,7 @@ const mutations = {
 };
 
 const actions = {
+  // todo: this will go away
   getCode: ({ commit }) => {
     Vue.http.get('/test').then((res) => {
       commit('UPDATE_CODE', {

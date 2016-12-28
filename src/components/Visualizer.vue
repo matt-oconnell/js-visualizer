@@ -4,7 +4,7 @@
     <el-row :gutter="20">
       <el-col :span="12">
         <!-- <CodeBlock v-if="!excluded('code-block')" :code="code" :currentLine="currentTrace.line" :lastLine="lastTrace ? lastTrace.line : -1"></CodeBlock> -->
-        <Monaco v-if="!excluded('code-block')" :code="code" @codeChanged="updateCode" :currentLine="currentTrace.line" :lastLine="lastTrace ? lastTrace.line : -1"></Monaco>
+        <Monaco v-if="!excluded('code-block')" :code="modelCode" @codeChanged="updateCode" :currentLine="currentTrace.line" :lastLine="lastTrace ? lastTrace.line : -1"></Monaco>
       </el-col>
       <el-col :span="12">
         <h4>Current Step</h4>
