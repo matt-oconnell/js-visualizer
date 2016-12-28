@@ -37,7 +37,10 @@ export default {
         const localVariables = [];
         Object.keys(frame.encoded_locals).forEach((key) => {
           const rawVal = frame.encoded_locals[key];
-          const val = Array.isArray(rawVal) ? rawVal[1] : rawVal;
+          let val = Array.isArray(rawVal) ? rawVal[1] : rawVal;
+          if (rawVal[0] === 'REF') {
+            val = this.trace.heap[val][0];
+          }
           localVariables.push({ name: key, val });
         });
         return {
