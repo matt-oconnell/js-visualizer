@@ -5,7 +5,6 @@
         <el-menu theme="dark" default-active="1" class="el-menu-demo" mode="horizontal" @select="handleSelect">
           <el-menu-item index="/">HOME</el-menu-item>
           <el-menu-item index="stack">STACK</el-menu-item>
-          <el-menu-item index="monaco">Monaco</el-menu-item>
         </el-menu>
       </el-col>
     </el-row>

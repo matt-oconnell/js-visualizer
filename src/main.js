@@ -18,7 +18,6 @@ const router = new VueRouter({
   routes: [
     { path: '/', component: HomeView },
     { path: '/stack', component: VisualizerView },
-    { path: '/monaco', component: MonacoView },
     { path: '*', redirect: '/' }
   ]
 });

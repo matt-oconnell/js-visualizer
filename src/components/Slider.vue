@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-row :gutter="20">
+    <el-row :gutter="20" style="padding: 10px 0;">
       <el-col :span="24">
         <el-slider v-model="localCodeI" :max="parseInt(trace.length)" show-stops show-input></el-slider>
       </el-col>
