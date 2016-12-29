@@ -2,20 +2,23 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const request = require('superagent');
+var cmd = require('node-cmd');
 
-app.get('/test', function(req, res) {
-  return request.get('http://localhost:3000/').then((data) => {
-    res.send(data.text);
-  })
-  .catch(e => res.send(e));
-});
+var code_start = require(__dirname + '/code');
+
+app.get('/test', function (req, res) {
+  cmd.get(`node --expose-debug-as=Debug api/jslogger.js --jsondump=true --code="${code_start}"`,
+  function(ret) {
+    res.send(ret);
+  });
+})
 
 app.get('/code', function(req, res) {
-  const code = encodeURIComponent(req.query.code);
-  return request.get('http://localhost:3000/code?code=' + code).then((data) => {
-    res.send(data.text);
-  })
-  .catch(e => res.send(e));
+  const code = req.query.code;
+  cmd.get(`node --expose-debug-as=Debug api/jslogger.js --jsondump=true --code="${code}"`,
+  function(ret) {
+    res.send(ret);
+  });
 });
 
 
