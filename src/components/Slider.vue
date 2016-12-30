@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20" style="padding: 10px 0;">
       <el-col :span="24">
-        <el-slider v-model="localCodeI" :max="parseInt(trace.length)" show-stops show-input></el-slider>
+        <el-slider v-model="localcodeStepI" :max="parseInt(trace.length)" show-stops show-input></el-slider>
       </el-col>
     </el-row>
   </div>
@@ -14,23 +14,22 @@ import { mapState } from 'vuex';
 export default {
   data() {
     return {
-      localCodeI: this.$store.state.codeI,
-      isReset: false
+      localcodeStepI: this.$store.state.codeStepI
     };
   },
   watch: {
-    localCodeI(i) {
-      this.$store.dispatch('updateCodeI', i);
+    localcodeStepI(i) {
+      this.$store.dispatch('updateCodeStepI', i);
     },
     isReset(isTrue) {
       if (isTrue) {
-        this.localCodeI = 0;
+        this.localcodeStepI = 0;
       }
     }
   },
   computed: mapState({
     trace: s => s.code ? s.code.trace : [],
-    isReset: s => s.codeI === 0
+    isReset: s => s.codeStepI === 0
   })
 };
 </script>

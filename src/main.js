@@ -5,7 +5,6 @@ import 'element-ui/lib/theme-default/index.css';
 import locale from 'element-ui/lib/locale/lang/en';
 import HomeView from './views/HomeView';
 import VisualizerView from './views/VisualizerView';
-import MonacoView from './views/MonacoView';
 import store from './store/store';
 import App from './App';
 

@@ -36,7 +36,6 @@
 <script>
 /*
 Todo:
-[ ] Option: Initialize with markdown template
 [ ] Handle Errors
 */
 import { mapState } from 'vuex';
@@ -69,7 +68,7 @@ export default {
       return this.exclude ? this.exclude.includes(el) : false;
     },
     getCode(code) {
-      this.$store.dispatch('getNewCode', this.modelCode);
+      this.$store.dispatch('analyzeCode', this.modelCode);
     },
     updateCode(code) {
       this.modelCode = code;
@@ -77,11 +76,9 @@ export default {
   },
   computed: mapState({
     currentTrace(s) {
-      return this.trace[s.codeI];
+      return this.trace[s.codeStepI];
     },
-    lastTrace(s) {
-      return s.code.trace[s.codeI - 1];
-    }
+    lastTrace: s => s.code.trace[s.codeStepI - 1]
   })
 };
 </script>
