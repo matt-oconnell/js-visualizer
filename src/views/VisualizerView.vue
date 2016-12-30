@@ -35,7 +35,7 @@ function times2(val) {
 const answer = times2(pow(2, 3));
 console.log(answer);
     `;
-    const storedCode = localStorage.getItem('cachedVueMonacoEditorCode');
+    const storedCode = localStorage.getItem('code');
     code = storedCode || code;
     this.$store.dispatch('analyzeCode', code);
   }

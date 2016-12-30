@@ -72,7 +72,7 @@ export default {
     },
     updateCode(code) {
       this.modelCode = code;
-      localStorage.setItem('cachedVueMonacoEditorCode', code);
+      localStorage.setItem('code', code);
     }
   },
   computed: mapState({
@@ -80,7 +80,27 @@ export default {
       return this.trace[s.codeStepI];
     },
     lastTrace: s => s.code.trace[s.codeStepI - 1]
-  })
+  }),
+  mounted() {
+    if (!localStorage.getItem('messageSeen')) {
+      const msg = `This JS Visualizer is an attempt to expose the process
+      of a javascript program running in Node v6.0.0. Some language features
+      are buggy (i.e. Promises don't work.)
+
+      Write code in the editor and click "Analyze Code" to analyze it.
+
+      Drag the slider at the top of the screen to scrub through the steps of the program.
+
+      Use the Vue browser plugin to see whats going on under the hood.
+      `;
+      this.$alert(msg, 'Javascript Stack Visualizer', {
+        confirmButtonText: 'Got it',
+        callback: () => {
+          localStorage.setItem('messageSeen', 'true');
+        }
+      });
+    }
+  }
 };
 </script>
 
