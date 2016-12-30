@@ -40,14 +40,14 @@ module.exports = {
   },
   methods: {
     onMounted(editor) {
-      console.log('after mount!', editor, editor.getValue(), editor.getModel());
+      // console.log('after mount!', editor, editor.getValue(), editor.getModel());
       this.editor = editor;
     },
     onCodeChange(editor) {
-      console.log('code changed!', this.editor.getValue());
+      // console.log('code changed!', this.editor.getValue());
     },
     clickHandler() {
-      console.log('here is the code:', this.editor.getValue());
+      // console.log('here is the code:', this.editor.getValue());
     }
   },
   created() {
