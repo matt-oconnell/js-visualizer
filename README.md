@@ -1,6 +1,6 @@
-# built w/ vue-webpack
+# JS-Visualizer
 
-> A Vue.js project
+> A Vue.js project 
 
 ## Build Setup
 
@@ -12,8 +12,8 @@ npm install
 npm run dev
 ```
 
-*Backend* 
+## Backend
 
-from http://pythontutor.com/javascript.html# (see api/jslogger)
+uses src from http://pythontutor.com/javascript.html# (see `api/jslogger.js`)
 
-Requires Node v6.0.0
+! Requires Node v6.0.0 for now
