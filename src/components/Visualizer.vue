@@ -72,6 +72,7 @@ export default {
     },
     updateCode(code) {
       this.modelCode = code;
+      localStorage.setItem('cachedVueMonacoEditorCode', code);
     }
   },
   computed: mapState({

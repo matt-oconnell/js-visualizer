@@ -18,7 +18,7 @@ export default {
     isLoaded: s => !!s.code
   }),
   mounted: function created() {
-    this.$store.dispatch('analyzeCode', `let i = 0;
+    let code = `let i = 0;
 function pow(base, power) {
   console.log('called', i++);
   let result = base;
@@ -34,8 +34,10 @@ function times2(val) {
 
 const answer = times2(pow(2, 3));
 console.log(answer);
-    `);
-    // this.$store.dispatch('getCode');
+    `;
+    const storedCode = localStorage.getItem('cachedVueMonacoEditorCode');
+    code = storedCode || code;
+    this.$store.dispatch('analyzeCode', code);
   }
 };
 </script>
