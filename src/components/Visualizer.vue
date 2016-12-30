@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="12">
         <el-row>
-          <el-button type="primary" @click="getCode">Analyze Code!</el-button>
+          <el-button class="wide" type="primary" @click="getCode">Analyze Code!</el-button>
         </el-row>
         <el-row v-if="!excluded('current-step') && currentTrace.exception_msg">
           <h4>Errors</h4>
@@ -28,6 +28,13 @@
         </el-row>
         <h4>Frames</h4>
         <FramesTable v-if="!excluded('frames')" :trace="currentTrace"></FramesTable>
+      </el-col>
+    </el-row>
+    <el-row>
+      <br>
+      <el-col>
+        <el-button @click="showMessage">Welcome Message</el-button>
+        <a target="_blank" href="https://github.com/matt-oconnell/js-visualizer">See Source</a>
       </el-col>
     </el-row>
   </div>
@@ -73,16 +80,8 @@ export default {
     updateCode(code) {
       this.modelCode = code;
       localStorage.setItem('code', code);
-    }
-  },
-  computed: mapState({
-    currentTrace(s) {
-      return this.trace[s.codeStepI];
     },
-    lastTrace: s => s.code.trace[s.codeStepI - 1]
-  }),
-  mounted() {
-    if (!localStorage.getItem('messageSeen')) {
+    showMessage() {
       const msg = `This JS Visualizer is an attempt to expose the process
       of a javascript program running in Node v6.0.0. Some language features
       are buggy (i.e. Promises don't work.)
@@ -100,6 +99,17 @@ export default {
         }
       });
     }
+  },
+  computed: mapState({
+    currentTrace(s) {
+      return this.trace[s.codeStepI];
+    },
+    lastTrace: s => s.code.trace[s.codeStepI - 1]
+  }),
+  mounted() {
+    if (!localStorage.getItem('messageSeen')) {
+      this.showMessage();
+    }
   }
 };
 </script>
@@ -111,6 +121,6 @@ export default {
   *
     user-select: none
 
-  .el-button
+  .el-button.wide
     width: 100%
 </style>
